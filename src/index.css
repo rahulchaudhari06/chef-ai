@@ -367,7 +367,7 @@ footer {
 }
 
 .suggested-recipe-container {
-  padding: var(--spacing-md);
+  padding: auto;
 }
 
 .error {
