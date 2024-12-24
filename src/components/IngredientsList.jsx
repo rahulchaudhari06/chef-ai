@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { getRecipeFromMistral } from "./ai";
-import ClaudeRecipe from "./ClaudeRecipe";
+import Recipe from "./Recipe";
 
 export default function IngredientsList() {
   const [ingredients, setIngredients] = useState([]);
@@ -13,6 +13,12 @@ export default function IngredientsList() {
     if (inputValue.trim()) {
       setIngredients([...ingredients, inputValue.trim()]);
       setInputValue("");
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleAddIngredient();
     }
   };
 
@@ -40,22 +46,34 @@ export default function IngredientsList() {
       </ul>
       <div className="add-ingredient-container">
         <input
+          className="ingredients-input"
           type="text"
           placeholder="Add an ingredient"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
+          onKeyPress={handleKeyPress}
         />
-        <button onClick={handleAddIngredient}>Add Ingredient</button>
+        <button
+          className="input-button"
+          onClick={handleAddIngredient}
+          disabled={!inputValue.trim()}
+        >
+          Add Ingredient
+        </button>
       </div>
       {ingredients.length > 0 && (
         <div className="get-recipe-container">
-          <button onClick={handleFetchRecipe} disabled={loading}>
+          <button
+            className="get-recipe-button"
+            onClick={handleFetchRecipe}
+            disabled={loading}
+          >
             {loading ? "Generating..." : "Get a recipe"}
           </button>
         </div>
       )}
       {error && <p className="error">{error}</p>}
-      <ClaudeRecipe recipe={recipe} />
+      <Recipe recipe={recipe} />
     </section>
   );
 }
