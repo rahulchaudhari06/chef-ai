@@ -6,6 +6,6 @@ export default defineConfig({
   plugins: [react()],
   base: "/chef-ai",
   build: {
-    outDir: "root",
+    outDir: "docs",
   },
 });
